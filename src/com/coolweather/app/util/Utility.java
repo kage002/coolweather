@@ -24,8 +24,8 @@ public class Utility {
 				for (String p : allProvinces) {
 					String[] array = p.split("\\|");
 					Province province = new Province();
-					province.setProvinceName(array[0]);
-					province.setProvinceCode(array[1]);
+					province.setProvinceCode(array[0]);
+					province.setProvinceName(array[1]);
 					coolWeatherDB.saveProvince(province);
 				}
 				return true;
