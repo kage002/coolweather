@@ -11,8 +11,8 @@
         
         <Button 
             android:id="@+id/switch_city"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:background="@drawable/home"/>
