@@ -40,6 +40,7 @@ public class ChooseAreaActivity extends Activity {
 	private ArrayAdapter<String> adapter;
 	private CoolWeatherDB coolWeatherDB;
 	private List<String> dataList = new ArrayList<String>();
+	private boolean isFromWeatherActivity;
 	/**
 	 * 省列表
 	 */
@@ -68,11 +69,13 @@ public class ChooseAreaActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		isFromWeatherActivity = getIntent().getBooleanExtra(
+				"from_weather_activity", false);
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		if (prefs.getBoolean("city_selected", false)) {
-			Intent intent = new Intent(this,
-					WeatherActivity.class);
+		//已经选择了城市且不是从WeatherActivity跳转过来，才会直接跳转到WeatherActivity
+		if (prefs.getBoolean("city_selected", false) && !isFromWeatherActivity) {
+			Intent intent = new Intent(this, WeatherActivity.class);
 			startActivity(intent);
 			finish();
 			return;
@@ -100,7 +103,7 @@ public class ChooseAreaActivity extends Activity {
 					String countyCode = countyList.get(index).getCountyCode();
 					Intent intent = new Intent(ChooseAreaActivity.this,
 							WeatherActivity.class);
-					intent.putExtra("county_code",countyCode);
+					intent.putExtra("county_code", countyCode);
 					startActivity(intent);
 					finish();
 				}
@@ -261,6 +264,10 @@ public class ChooseAreaActivity extends Activity {
 		} else if (currentLevel == LEVEL_CITY) {
 			queryProvinces();
 		} else {
+			if(isFromWeatherActivity){
+				Intent intent = new Intent (this, WeatherActivity.class);
+				startActivity(intent);
+			}
 			finish();
 		}
 	}
